@@ -8,6 +8,8 @@
 
 import time
 
+from prophecy.columnfamily import *
+from prophecy.base import CassandraBase
 
 class SuperColumn(CassandraBase, dict):
     name = ""

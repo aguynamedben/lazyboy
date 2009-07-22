@@ -8,7 +8,7 @@
 
 import time
 
-from prophecy.connection import CassandraBase
+from prophecy.base import CassandraBase
 from prophecy.exceptions import *
 
 class ColumnFamily(CassandraBase, dict):

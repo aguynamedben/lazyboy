@@ -9,7 +9,8 @@
 import time
 import uuid
 
-
+from prophecy.base import CassandraBase
+from prophecy.columnfamily import *
 
 class SuperColumnFamily(ColumnFamily):
     _key = {}
