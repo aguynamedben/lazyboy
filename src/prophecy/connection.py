@@ -11,7 +11,7 @@ import inspect
 import random, os
 import threading
 
-from cassandra import Cassandra
+from cassandra import *
 from thrift import Thrift
 from thrift.transport import TTransport
 from thrift.transport import TSocket
