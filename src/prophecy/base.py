@@ -8,6 +8,10 @@
 
 import uuid
 
+from prophecy.exceptions import UnknownTableException
+from prophecy.connection import getClient
+from prophecy.primarykey import PrimaryKey
+
 class CassandraBase(object):
     """The base class for all Cassandra-accessing objects."""
 
@@ -22,7 +26,7 @@ class CassandraBase(object):
 
         table = table or self.pk.table
         if table not in self._clients:
-            self._clients[table] = cassandra.getClient(table)
+            self._clients[table] = getClient(table)
 
         return self._clients[table]
 
