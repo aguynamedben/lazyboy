@@ -7,7 +7,8 @@
 #
 
 import unittest
-from digg.storage.object import PrimaryKey, IncompleteKeyException
+from prophecy.primarykey import PrimaryKey
+from prophecy.exceptions import IncompleteKeyException
 
 class PrimaryKeyTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):

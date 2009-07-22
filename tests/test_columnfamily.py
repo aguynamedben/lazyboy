@@ -11,11 +11,6 @@ import uuid
 import random
 import unittest
 
-import digg.storage.object
-import digg.storage.cassandra as cassandra
-from digg.storage.object import *
-from digg.storage.object import _CassandraBase
-
 
 _last_cols = []
 _mutations = []
@@ -42,18 +37,18 @@ class MockClient(cassandra.Client):
 class CassandraBaseTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(CassandraBaseTest, self).__init__(*args, **kwargs)
-        self.class_ =  _CassandraBase
+        self.class_ =  CassandraBase
 
     def _get_object(self, *args, **kwargs):
         return self.class_(*args, **kwargs)
 
     def setUp(self):
-        self.__cassandra = digg.storage.object.cassandra
-        digg.storage.object.cassandra.getClient = lambda table: "Test"
+        self.__getClient = prophecy.connection.getClient
+        prophecy.connection.getClient = lambda table: "Test"
         self.object = self._get_object()
 
     def tearDown(self):
-        digg.storage.object.cassandra = self.__cassandra
+        prophecy.connection.getClient = self.__getClient
         del self.object
 
     def test_init(self):

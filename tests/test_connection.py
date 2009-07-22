@@ -1,8 +1,7 @@
-import digg.storage.cassandra as cassandra
-import digg.config as config
+from prophecy.connection import *
 import py, time
 
-class TestCassandra(object):
+class TestClient(object):
     def __init__(self):
         self.config = config.factory("cassandra")
     
