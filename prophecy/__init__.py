@@ -6,9 +6,6 @@
 # Author: Ian Eure <ian@digg.com>
 #
 
-from prophecy.primarykey import *
-from prophecy.columnfamily import *
-from prophecy.supercolumnfamily import *
-from prophecy.supercolumn import *
-from prophecy.view import *
+__all__ = ['primarykey', 'columnfamily', 'supercolumnfamily', 'supercolumn',
+           'view']
 
