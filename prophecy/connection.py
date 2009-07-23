@@ -19,19 +19,27 @@ from thrift.protocol import TBinaryProtocol
 
 from prophecy.exceptions import ErrorCassandraClientNotFound
 
-servers = {}
+
+_SERVERS = {}
 _CLIENTS = {}
 
-def getClient(name):
+
+def add_pool(name, servers):
+    """Add a connection"""
+    _SERVERS[name] = servers
+
+
+def get_pool(name):
     key = str(os.getpid()) + threading.currentThread().getName() + name
     if key in _CLIENTS:
         return _CLIENTS[key]
 
     try:
-        _CLIENTS[key] = Client(servers[name])
+        _CLIENTS[key] = Client(_SERVERS[name])
         return _CLIENTS[key]
     except Exception, e:
         raise ErrorCassandraClientNotFound
+
 
 class Client(object):
     def __init__(self, servers):
@@ -94,7 +102,6 @@ class Client(object):
             client = self._getServer()
             if self._connect(client):
                 try:
-                    # print 'Stack', attr, args
                     return getattr(client, attr).__call__(*args, **kwargs)
                 except Thrift.ErrorT, tx:
                     if tx.message:

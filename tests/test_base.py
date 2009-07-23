@@ -20,12 +20,12 @@ class CassandraBaseTest(unittest.TestCase):
         return self.class_(*args, **kwargs)
 
     def setUp(self):
-        self.__getClient = prophecy.connection.getClient
-        prophecy.connection.getClient = lambda table: "Test"
+        self.__get_pool = prophecy.connection.get_pool
+        prophecy.connection.get_pool = lambda table: "Test"
         self.object = self._get_object()
 
     def tearDown(self):
-        prophecy.connection.getClient = self.__getClient
+        prophecy.connection.get_pool = self.__get_pool
         del self.object
 
     def test_init(self):
