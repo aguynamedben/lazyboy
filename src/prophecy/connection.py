@@ -17,15 +17,18 @@ from thrift.transport import TTransport
 from thrift.transport import TSocket
 from thrift.protocol import TBinaryProtocol
 
+from prophecy.exceptions import ErrorCassandraClientNotFound
+
+servers = {}
 _CLIENTS = {}
+
 def getClient(name):
     key = str(os.getpid()) + threading.currentThread().getName() + name
     if key in _CLIENTS:
         return _CLIENTS[key]
 
-    cass_config = config.factory("cassandra")
     try:
-        _CLIENTS[key] = Client(cass_config.servers[name])
+        _CLIENTS[key] = Client(servers[name])
         return _CLIENTS[key]
     except Exception, e:
         raise ErrorCassandraClientNotFound
@@ -73,7 +76,7 @@ class Client(object):
         try:
             client.transport.open()
             return True
-        except Thrift.TException, tx:
+        except Thrift.ErrorT, tx:
             if tx.message:
                 message = tx.message
             else:
@@ -93,7 +96,7 @@ class Client(object):
                 try:
                     # print 'Stack', attr, args
                     return getattr(client, attr).__call__(*args, **kwargs)
-                except Thrift.TException, tx:
+                except Thrift.ErrorT, tx:
                     if tx.message:
                         message = tx.message
                     else:

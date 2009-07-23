@@ -23,7 +23,7 @@ class TestClient(object):
         end = -1
         try:
             client.get_slice(table, key, column, start, end)
-        except cassandra.InvalidRequestException, e:
+        except cassandra.ErrorInvalidRequest, e:
             assert True == True
                 
     def testInvalidClient(self):

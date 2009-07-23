@@ -8,7 +8,7 @@
 
 import unittest
 from prophecy.primarykey import PrimaryKey
-from prophecy.exceptions import IncompleteKeyException
+from prophecy.exceptions import ErrorIncompleteKey
 
 class PrimaryKeyTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
@@ -29,7 +29,7 @@ class PrimaryKeyTest(unittest.TestCase):
                                  (args[k], k, getattr(pk, k)))
 
         for args in self.denied:
-            self.assertRaises(IncompleteKeyException, PrimaryKey, **args)
+            self.assertRaises(ErrorIncompleteKey, PrimaryKey, **args)
 
     def test_super(self):
         self.assert_(not PrimaryKey(table='eggs', key='sausage').is_super())

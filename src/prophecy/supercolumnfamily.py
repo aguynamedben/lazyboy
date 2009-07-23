@@ -2,8 +2,8 @@
 #
 # A new Python file
 #
-# © 2009 Buster Marx, Inc All rights reserved.
-# Author: Ian Eure <ian.eure@gmail.com>
+# © 2009 Digg, Inc. All rights reserved.
+# Author: Ian Eure <ian@digg.com>
 #
 
 import time

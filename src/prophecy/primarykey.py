@@ -2,17 +2,17 @@
 #
 # A new Python file
 #
-# © 2009 Buster Marx, Inc All rights reserved.
-# Author: Ian Eure <ian.eure@gmail.com>
+# © 2009 Digg, Inc. All rights reserved.
+# Author: Ian Eure <ian@digg.com>
 #
 
-from prophecy.exceptions import IncompleteKeyException
+from prophecy.exceptions import ErrorIncompleteKey
 
 class PrimaryKey(object):
     def __init__(self, table, key, family = None, supercol=None, superkey=None):
         """Construct a PK object from a string representation or keyword args"""
         if (supercol or superkey) and not (supercol and superkey):
-            raise IncompleteKeyException("You must set both supercol and superkey")
+            raise ErrorIncompleteKey("You must set both supercol and superkey")
         for (k, v) in vars().items(): setattr(self, k, v)
 
     def is_super(self):

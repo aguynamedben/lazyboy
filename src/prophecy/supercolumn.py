@@ -2,8 +2,8 @@
 #
 # A new Python file
 #
-# © 2009 Buster Marx, Inc All rights reserved.
-# Author: Ian Eure <ian.eure@gmail.com>
+# © 2009 Digg, Inc All rights reserved.
+# Author: Ian Eure <ian@digg.com>
 #
 
 import time
@@ -31,7 +31,7 @@ class SuperColumn(CassandraBase, dict):
         return self
 
     def __setitem__(self, item, value):
-        raise NotSupportedException("This operation is unsupported")
+        raise ErrorNotSupported("This operation is unsupported")
 
     def _load_one(self, superkey):
         """Load and return an instance of the SCF with key superkey."""

@@ -6,21 +6,24 @@
 # Author: Ian Eure <ian@digg.com>
 #
 
-class NotSupportedException(Exception):
+class ErrorNotSupported(Exception):
     pass
 
 
-class MissingFieldException(Exception):
+class ErrorMissingField(Exception):
     pass
 
 
-class InvalidFieldException(Exception):
+class ErrorInvalidField(Exception):
     pass
 
 
-class IncompleteKeyException(Exception):
+class ErrorIncompleteKey(Exception):
     pass
 
 
-class UnknownTableException(Exception):
+class ErrorUnknownTable(Exception):
+    pass
+
+class ErrorCassandraClientNotFound(Exception):
     pass

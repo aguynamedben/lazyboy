@@ -2,13 +2,13 @@
 #
 # A new Python file
 #
-# © 2009 Buster Marx, Inc All rights reserved.
-# Author: Ian Eure <ian.eure@gmail.com>
+# © 2009 Digg, Inc. All rights reserved.
+# Author: Ian Eure <ian@digg.com>
 #
 
 import uuid
 
-from prophecy.exceptions import UnknownTableException
+from prophecy.exceptions import ErrorUnknownTable
 from prophecy.connection import getClient
 from prophecy.primarykey import PrimaryKey
 
@@ -22,7 +22,7 @@ class CassandraBase(object):
         """Return the cassandra client."""
         if not table and (not hasattr(self, 'pk') or \
                               not hasattr(self.pk, 'table')):
-            raise UnknownTableException()
+            raise ErrorUnknownTable()
 
         table = table or self.pk.table
         if table not in self._clients:

@@ -8,6 +8,8 @@
 
 import time
 
+from cassandra.ttypes import Column, ColumnParent, BatchMutation
+
 from prophecy.base import CassandraBase
 from prophecy.exceptions import *
 
@@ -68,7 +70,7 @@ class ColumnFamily(CassandraBase, dict):
         super(ColumnFamily, self).__setitem__(item, value)
 
         if not item in self._columns:
-            self._columns[item] = cassandra.Column(name=item,
+            self._columns[item] = Column(name=item,
                                                    timestamp=time.time())
 
         col = self._columns[item]
@@ -90,21 +92,21 @@ class ColumnFamily(CassandraBase, dict):
         self.pk = self._gen_pk(key)
 
         self._original = self._get_cas().get_slice(
-            self.pk.table, self.pk.key, cassandra.ColumnParent(self.pk.family),
+            self.pk.table, self.pk.key, ColumnParent(self.pk.family),
             '', '', True, 100)
         self.revert()
         return self
 
     def save(self):
         if not self.valid():
-            raise MissingFieldException("Missing required field(s):",
+            raise ErrorMissingField("Missing required field(s):",
                                         self.missing())
 
         client = self._get_cas()
         # Delete items
         deleted = self._deleted.keys()
         [client.remove(self.pk.table, self.pk.key,
-                       cassandra.ColumnPathOrParent(self.pk.family, None, dlt),
+                       ColumnPathOrParent(self.pk.family, None, dlt),
                        time.time(), 0) \
              for dlt in deleted if dlt in self._original]
 
@@ -114,7 +116,7 @@ class ColumnFamily(CassandraBase, dict):
         if changed:
             client.batch_insert(
                 self.pk.table,
-                cassandra.BatchMutation(
+                BatchMutation(
                     self.pk.key, {self.pk.family: changed}), 0)
         return self
 
@@ -144,13 +146,13 @@ class ImmutableColumnFamily(ColumnFamily):
     def __setitem__(self, attr, value):
         """Set an attribute, unless it is immutable"""
         if attr in self._immutable.keys():
-            raise InvalidFieldException("You may not change the %s field" \
+            raise ErrorInvalidField("You may not change the %s field" \
                                             % (attr,))
         super(ImmutableColumnFamily, self).__setitem__(attr, value)
 
     def __delitem__(self, attr):
         """Delete an attribute, unless it is immutable"""
         if attr in self._immutable.keys():
-            raise InvalidFieldException("You may not change the %s field" \
+            raise ErrorInvalidField("You may not change the %s field" \
                                             % (attr,))
         super(ImmutableColumnFamily, self).__delitem__(attr)

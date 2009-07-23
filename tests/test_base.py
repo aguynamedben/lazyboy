@@ -2,14 +2,14 @@
 #
 # A new Python file
 #
-# © 2009 Buster Marx, Inc All rights reserved.
-# Author: Ian Eure <ian.eure@gmail.com>
+# © 2009 Digg, Inc. All rights reserved.
+# Author: Ian Eure <ian@digg.com>
 #
 
 import unittest
 from prophecy.base import CassandraBase
 import prophecy.connection
-from prophecy.exceptions import UnknownTableException
+from prophecy.exceptions import ErrorUnknownTable
 
 class CassandraBaseTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
@@ -36,7 +36,7 @@ class CassandraBaseTest(unittest.TestCase):
         if hasattr(self.object, 'pk'):
             _pk = self.object.pk
             del self.object.pk
-        self.assertRaises(UnknownTableException, self.object._get_cas)
+        self.assertRaises(ErrorUnknownTable, self.object._get_cas)
         if _pk:
             self.object.pk = _pk
 
