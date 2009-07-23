@@ -9,7 +9,7 @@
 import uuid
 
 from lazyboy.exceptions import ErrorUnknownTable
-from lazyboy.connection import get_pool
+import lazyboy.connection as connection
 from lazyboy.primarykey import PrimaryKey
 
 class CassandraBase(object):
@@ -26,7 +26,7 @@ class CassandraBase(object):
 
         table = table or self.pk.table
         if table not in self._clients:
-            self._clients[table] = get_pool(table)
+            self._clients[table] = connection.get_pool(table)
 
         return self._clients[table]
 

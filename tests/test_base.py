@@ -9,6 +9,7 @@
 import unittest
 from lazyboy.base import CassandraBase
 import lazyboy.connection
+from lazyboy.primarykey import *
 from lazyboy.exceptions import ErrorUnknownTable
 
 class CassandraBaseTest(unittest.TestCase):
