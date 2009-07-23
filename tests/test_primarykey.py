@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-# Prophecy: PrimaryKey unit tests
+# Lazyboy: PrimaryKey unit tests
 #
 # © 2009 Digg, Inc. All rights reserved.
 # Author: Ian Eure <ian@digg.com>
 #
 
 import unittest
-from prophecy.primarykey import PrimaryKey
-from prophecy.exceptions import ErrorIncompleteKey
+from lazyboy.primarykey import PrimaryKey
+from lazyboy.exceptions import ErrorIncompleteKey
 
 class PrimaryKeyTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):

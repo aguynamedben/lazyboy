@@ -1,4 +1,4 @@
-from prophecy.connection import *
+from lazyboy.connection import *
 import unittest
 import time
 

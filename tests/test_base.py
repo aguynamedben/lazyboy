@@ -7,9 +7,9 @@
 #
 
 import unittest
-from prophecy.base import CassandraBase
-import prophecy.connection
-from prophecy.exceptions import ErrorUnknownTable
+from lazyboy.base import CassandraBase
+import lazyboy.connection
+from lazyboy.exceptions import ErrorUnknownTable
 
 class CassandraBaseTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
@@ -20,12 +20,12 @@ class CassandraBaseTest(unittest.TestCase):
         return self.class_(*args, **kwargs)
 
     def setUp(self):
-        self.__get_pool = prophecy.connection.get_pool
-        prophecy.connection.get_pool = lambda table: "Test"
+        self.__get_pool = lazyboy.connection.get_pool
+        lazyboy.connection.get_pool = lambda table: "Test"
         self.object = self._get_object()
 
     def tearDown(self):
-        prophecy.connection.get_pool = self.__get_pool
+        lazyboy.connection.get_pool = self.__get_pool
         del self.object
 
     def test_init(self):

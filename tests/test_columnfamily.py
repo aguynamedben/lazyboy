@@ -13,9 +13,9 @@ import unittest
 
 from cassandra.ttypes import Column, ColumnParent, BatchMutation
 
-from prophecy.connection import Client
-from prophecy.columnfamily import ColumnFamily
-from prophecy.exceptions import ErrorMissingField
+from lazyboy.connection import Client
+from lazyboy.columnfamily import ColumnFamily
+from lazyboy.exceptions import ErrorMissingField
 
 from test_base import CassandraBaseTest
 
